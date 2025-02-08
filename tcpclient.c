@@ -37,13 +37,13 @@ int main(int argc, char *argv[]) {
     addr.sin_port = htons(80); //Little Endian to Big Endian, (Depending on the System Architecture)
 
     if (bind(sock, &addr, sizeof(addr)) == SOCKET_ERROR){
-        printf("Failed to create socket with IP\n");
+        printf("Failed to create socket with IP: %d \n",WSAGetLastError());
         exit(1);
     }
 
     bind(sock, &addr, sizeof(addr));
     listen(sock, 5);
-    accept(); //Returns da ClientSocket.
+    accept(sock, &addr, 0); //Returns da ClientSocket. //The connection is actually made with the socket that is returned by accept.
 
     return 0;
     exit(0);
