@@ -34,12 +34,16 @@ int main(int argc, char *argv[]) {
     
     addr.sin_family = AF_INET;
     addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    addr.sin_port = htons(80);
+    addr.sin_port = htons(80); //Little Endian to Big Endian, (Depending on the System Architecture)
 
-    if (bind(sock, (SOCKADDR*) &addr, sizeof(addr)) == SOCKET_ERROR){
+    if (bind(sock, &addr, sizeof(addr)) == SOCKET_ERROR){
         printf("Failed to create socket with IP\n");
         exit(1);
     }
+
+    bind(sock, &addr, sizeof(addr));
+    listen(sock, 5);
+    accept(); //Returns da ClientSocket.
 
     return 0;
     exit(0);
