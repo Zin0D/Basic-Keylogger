@@ -6,7 +6,9 @@
 //https://learn.microsoft.com/en-us/windows/win32/api/winsock2/ Documentation.
 //Or use Exit.
 
-#pragma comment(lib,"ws2_32.lib")
+#pragma comment(lib,"ws2_32.lib") //For the Linker.
+#define NETWORKING_BUFFER 512
+
 
 int main(int argc, char *argv[]) {
     printf("Creating WinSocket..."); //Sugoma Balls fucking Windows
@@ -15,6 +17,8 @@ int main(int argc, char *argv[]) {
     SOCKET sock;
     SOCKET check_sock_invalid = INVALID_SOCKET;
     struct sockaddr_in addr;
+    char buffer[NETWORKING_BUFFER];
+    int recv_lenght = NETWORKING_BUFFER;
 
     if (WSAStartup(MAKEWORD(2,2),&data) != 0) { //If WsaStartup returns a 0, the Initialisation failed.
         printf("Failed to initialize. : %d\n", WSAGetLastError()); //Backward Compatibility aswell 
@@ -43,8 +47,17 @@ int main(int argc, char *argv[]) {
 
     bind(sock, &addr, sizeof(addr));
     listen(sock, 5);
+
+    if (accept(sock, &addr, 0) == INVALID_SOCKET){
+        printf("Connection with Host failed. %d\n", WSAGetLastError());
+        exit(1);
+    }
     accept(sock, &addr, 0); //Returns da ClientSocket. //The connection is actually made with the socket that is returned by accept.
+    
+    recv(sock, buffer, recv_lenght, 0);
+
 
     return 0;
+
     exit(0);
 }
