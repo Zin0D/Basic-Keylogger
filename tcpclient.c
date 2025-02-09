@@ -5,6 +5,7 @@
 //Return 1 = Failure.
 //https://learn.microsoft.com/en-us/windows/win32/api/winsock2/ Documentation.
 //Or use Exit.
+//https://devdocs.io/c
 
 #pragma comment(lib,"ws2_32.lib") //For the Linker.
 #define NETWORKING_BUFFER 512
@@ -19,6 +20,7 @@ int main(int argc, char *argv[]) {
     struct sockaddr_in addr;
     char buffer[NETWORKING_BUFFER];
     int recv_lenght = NETWORKING_BUFFER;
+    char key[] = "I am going to goon.";
 
     if (WSAStartup(MAKEWORD(2,2),&data) != 0) { //If WsaStartup returns a 0, the Initialisation failed.
         printf("Failed to initialize. : %d\n", WSAGetLastError()); //Backward Compatibility aswell 
@@ -37,7 +39,7 @@ int main(int argc, char *argv[]) {
     
     
     addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    addr.sin_addr.s_addr = inet_addr(argv[1]);
     addr.sin_port = htons(80); //Little Endian to Big Endian, (Depending on the System Architecture)
 
     if (bind(sock, &addr, sizeof(addr)) == SOCKET_ERROR){
@@ -55,7 +57,10 @@ int main(int argc, char *argv[]) {
     accept(sock, &addr, 0); //Returns da ClientSocket. //The connection is actually made with the socket that is returned by accept.
     
     recv(sock, buffer, recv_lenght, 0);
+    //Request.
+    if (memcmp(buffer, "SUGOMA BALLS",6) == 0){ //CMP instructions are subtractions of 2 values.
 
+    }
 
     return 0;
 
