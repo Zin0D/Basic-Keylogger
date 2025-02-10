@@ -6,10 +6,11 @@
 //https://learn.microsoft.com/en-us/windows/win32/api/winsock2/ Documentation.
 //Or use Exit.
 //https://devdocs.io/c
+//Goto for deeply nested code if wanting to jump to another section.
 
 #pragma comment(lib,"ws2_32.lib") //For the Linker.
 #define NETWORKING_BUFFER 512
-
+#define ERROR_MESSAGE "HTTP/1.1 404 NOT FOUND"
 
 int main(int argc, char *argv[]) {
     printf("Creating WinSocket..."); //Sugoma Balls fucking Windows
@@ -20,7 +21,8 @@ int main(int argc, char *argv[]) {
     struct sockaddr_in addr;
     char buffer[NETWORKING_BUFFER];
     int recv_lenght = NETWORKING_BUFFER;
-    char key[] = "RECEIVE / CHAD"; 
+    char request[] = "GET /index.html HTTP/1.1"; 
+    char response[] = " / "; 
 
     if (WSAStartup(MAKEWORD(2,2),&data) != 0) { //If WsaStartup returns a 0, the Initialisation failed.
         printf("Failed to initialize. : %d\n", WSAGetLastError()); //Backward Compatibility aswell 
@@ -56,12 +58,12 @@ int main(int argc, char *argv[]) {
     }
     accept(sock, &addr, 0); //Returns da ClientSocket. //The connection is actually made with the socket that is returned by accept.
     
-    recv(sock, buffer, recv_lenght, 0);
+    recv(sock, buffer, recv_lenght, 0); //Updated in Array.
     //Request.
-    if (memcmp(buffer, key, strlen(key)) == 0){ //CMP instructions are subtractions of 2 values.
-        //Time to Send Something back
+    if (memcmp(buffer, response, strlen(response)) == 0){ //CMP instructions are subtractions of 2 values.
+        send(sock, response, strlen(response), 0);
     } else {
-        //TIME to send an ERROR Message.
+        send(sock, ERROR_MESSAGE, strlen(ERROR_MESSAGE), 0); //Send the error message if requested something not in here.
     }
 
     return 0;
