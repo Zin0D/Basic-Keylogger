@@ -21,8 +21,8 @@ int main(int argc, char *argv[]) {
     struct sockaddr_in addr;
     char buffer[NETWORKING_BUFFER];
     int recv_lenght = NETWORKING_BUFFER;
-    char request[] = "GET /index.html HTTP/1.1"; 
-    char response[] = " / "; 
+    char request[25] = "GET /index.html HTTP/1.1"; 
+    char response[27] = " / This is a test message "; 
 
     if (WSAStartup(MAKEWORD(2,2),&data) != 0) { //If WsaStartup returns a 0, the Initialisation failed.
         printf("Failed to initialize. : %d\n", WSAGetLastError()); //Backward Compatibility aswell 
