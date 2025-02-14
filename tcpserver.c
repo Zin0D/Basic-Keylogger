@@ -1,6 +1,7 @@
 #include <winsock2.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <Windows.h>
 //Return 0 = no failure, ASM like.
 //Return 1 = Failure.
 //https://learn.microsoft.com/en-us/windows/win32/api/winsock2/ Documentation.
@@ -13,6 +14,11 @@
 #define ERROR_MESSAGE "HTTP/1.1 404 NOT FOUND"
 
 int main(int argc, char *argv[]) {
+    MessageBoxW(0, L"Creating WinSocket", L"NetWorking", MB_OKCANCEL);
+    if (MessageBoxW(0, L"Creating WinSocket", L"NetWorking", MB_OKCANCEL) == ){
+        printf("Aborting...")
+        exit(0);
+    }
     printf("Creating WinSocket..."); //Sugoma Balls fucking Windows
     
     WSADATA data; //Holds Information about WinSockLib
