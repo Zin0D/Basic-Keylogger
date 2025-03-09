@@ -68,6 +68,6 @@ int main(int argc, char *argv[]) {
     } else {
         send(sock, ERROR_MESSAGE, strlen(ERROR_MESSAGE), 0); //Send the error message if requested something not in here.
     }
-
+d
     exit(0);
 }
