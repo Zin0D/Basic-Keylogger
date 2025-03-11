@@ -1,2 +1,2 @@
 # Reverse-Shells
-- Reverse Shell for Windows.
+- A revshell in C (For Win)
