@@ -27,7 +27,7 @@ print(banner)
 user32 = windll.user32
 kernel32 = windll.kernel32
 
-ULONG_PTR, lres = checkos() #Function call to get all params needed to input in struct and win32 funcs.
+ULONG_PTR, lres = checkos() #Function call to get all params needed to input in struct and win32 funcs. #s
 
 
 # Define the KBDLLHOOKSTRUCT structure
