@@ -20,8 +20,8 @@ def start_moving():
 
 def check_dead():
     while True:
-        if keyboard.pressed('OW'):
-            print("Oh")
+        if keyboard.pressed('O'):
+            print("Oh") #Checking in a Seperate Thread but somehow buggin.
             return False
         time.sleep(1)
 
