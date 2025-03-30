@@ -16,7 +16,10 @@ void stringed(char **chad, char **chad2){
     char *t = *chad;
     *chad = *chad2;
     *chad2 = t;
-    printf("Strings swapped.");
+    printf("Strings swapped.\n");
+    int owa = 29;
+    int *powa = &owa;
+    printf("Owa is currently: %d\n", *powa);
 }
 
 int main(){
