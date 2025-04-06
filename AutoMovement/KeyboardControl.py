@@ -1,10 +1,14 @@
 from pynput.keyboard import Key, Controller
+from pynput.mouse import *
 import time
 import threading
 
 print("Time To Launch GUI aswell")
 
 keyboard = Controller()
+
+mouse = Controller()
+
 
 def sleep(time_to_sleep):
     time.sleep(time_to_sleep)
@@ -18,21 +22,10 @@ def start_moving():
     keyboard.release('S')
     sleep(3)
 
-def check_dead():
-    while True:
-        if keyboard.pressed('O'):
-            print("Oh") #Checking in a Seperate Thread but somehow buggin.
-            return False
-        time.sleep(1)
-
-check = threading.Thread(target=check_dead, args=())
-check.start()
 
 if __name__ == "__main__":
-    try:
-        while check:
-            start_moving()
-        print("Exiting")
-    except KeyboardInterrupt:
-        print("Recognized Exit Signal, exiting...")
+    while True:
+        mouse.click(button=Button.left)
+        time.sleep(0.1) #Remove for full GangBang
+        
 

@@ -18,11 +18,14 @@ def execute_cmd(cmd):
 print(execute_cmd("whoami").decode())
 
 def shell_thread(sock):
-    sock.send(b"\r\nEnter Command")
-    
-    data = sock.recv(MAX_BUFFER)
-    if data:
-        buffer = data.decode()
+    while True:
+        sock.send(b"\r\nEnter Command")
+        
+        data = sock.recv(MAX_BUFFER)
+        if data:
+            buffer = data.decode()
 
-        if not buffer or buffer == "exit":
-            print("Did not receive")
+            if not buffer or buffer == "exit":
+                print("Did not receive")
+        if KeyboardInterrupt:
+            break
