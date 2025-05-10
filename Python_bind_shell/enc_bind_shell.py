@@ -8,7 +8,6 @@ import argparse
 MAX_BUFFER = 4096
 DEFAULT_PORT = 8080
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-IP = socket.gethostbyaddr(socket.gethostname())
 
 def execute_cmd(cmd):
     try:
@@ -24,7 +23,7 @@ def decode_and_strip(s):
 
 def shell_thread(sock):
     try:
-        sock.send(f": ENTER COMMANDS TO EXECUTE : LocalIP_OF_Machine:[{IP}]") #I think im getting the hang outta this.
+        sock.send(f": ENTER COMMANDS TO EXECUTE : LocalIP_OF_Machine:") #I think im getting the hang outta this.
 
         while True:
             sock.send(b"\r\nEnter Command")
@@ -63,7 +62,7 @@ def shell_thread(sock):
         sock.close()
         exit()
 
-def send_thread(socketi):
+def send_thread(socketi): # A function for ingegrated Client way to talk to server.
     try:
         while True:
             data = input() + "\n" #New Line as we got BareBones-Shell
@@ -77,6 +76,9 @@ def server():
     sock.bind(("0.0.0.0", DEFAULT_PORT))
     sock.listen()
     print("SHELL - LOADED")
-    threading.Thread(target=shell_thread, args=sock).start()
+    while True:
+        client_socket, addr = sock.accept()
+        print("New User Connected")
+        threading.Thread(target=shell_thread, args=(client_socket,)).start()
 
 server()
