@@ -6,7 +6,7 @@ import argparse
 
 
 MAX_BUFFER = 4096
-DEFAULT_PORT = 443
+DEFAULT_PORT = 8080
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 IP = socket.gethostbyaddr()
 
@@ -44,11 +44,37 @@ def shell_thread(sock):
 
     except ConnectionAbortedError:
         print("Connection aborted:")
+        sock.close()
+        exit()
     except ConnectionRefusedError:
         print("Connection blocked:")
+        sock.close()
+        exit()
     except ConnectionResetError:
-        print("Connection Reset, Did the Firewall block you?, Or the Host close his Enddevice?")
+        print("Connection Reset, Did the Firewall block you?")
+        sock.close()
+        exit()
     except ConnectionError:
         print("Connection Error:")
+        sock.close()
+        exit()
     except Exception as e:
         print(f"Unexpected Error: [{e}]")
+        sock.close()
+        exit()
+
+def send_thread(socketi):
+    try:
+        while True:
+            data = input() + "\n" #New Line as we got BareBones-Shell
+            socketi.send(data.encode("utf-8"))
+    except Exception as e:
+        print(f"ERROR : {e}")
+        socketi.close()
+        exit()
+
+def server():
+    sock.bind("0.0.0.0", DEFAULT_PORT)
+    sock.listen()
+    print("SHELL - LOADED")
+    threading.Thread(target=shell_thread, args=sock)
