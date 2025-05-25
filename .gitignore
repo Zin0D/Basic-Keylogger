@@ -1,3 +1,7 @@
 /.vscode
 /__pycache__
 /.venv
+/CSockets
+/PrivEsc
+/Python_bind_shell
+/WebBasedExploits
